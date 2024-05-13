@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+node_modules/
+
+# Archivos de caché
+npm-debug.log
+yarn-error.log
+
+# Archivos generados por los sistemas de construcción
+dist/
+build/
+
+# Archivos de configuración locales
+.env
+
+# Archivos de respaldo
+*.bak
+*.backup
