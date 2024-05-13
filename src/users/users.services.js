@@ -53,7 +53,9 @@ const registerUser = (req, res) => {
                 res.status(201).json(data);
             })
             .catch((err) => {
-                res.status(400).json(err.message);
+                const data = err.errors[0];
+                delete data.instance;
+                res.status(400).json(data);
             });
     } else {
         //? Error cuando no mandan todos los datos necesarios para crear un usuario
