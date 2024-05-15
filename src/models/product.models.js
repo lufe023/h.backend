@@ -21,10 +21,6 @@ const Product = db.define(
             allowNull: false,
         },
         Description: {
-            type: DataTypes.ARRAY(DataTypes.STRING), // Aquí especificamos que Description será un array de strings
-            allowNull: true,
-        },
-        longDescription: {
             type: DataTypes.TEXT, // Campo para guardar la descripción como texto
             allowNull: true,
         },
@@ -54,7 +50,6 @@ const Product = db.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
-
         category: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -72,22 +67,16 @@ const Product = db.define(
             },
         },
     },
+
     {
         hooks: {
-            // Hook que se ejecuta antes de guardar un producto
+            // Hook que se ejecuta antes de guardar o actualizar un producto
             beforeSave: async (product) => {
-                try {
-                    // Verifica si el campo Description ha cambiado
-                    if (product.changed("Description")) {
-                        // Convierte el array de Description a texto y lo guarda en longDescription
-                        product.longDescription = product.Description.join(" ");
-                    }
-                } catch (error) {
-                    console.error(
-                        "Error al guardar la descripción como texto:",
-                        error
+                if (product.changed("Title")) {
+                    product.Handle = product.Title.toLowerCase().replace(
+                        /\s+/g,
+                        "-"
                     );
-                    throw error;
                 }
             },
         },

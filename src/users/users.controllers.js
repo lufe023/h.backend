@@ -28,7 +28,7 @@ const createUser = async (data) => {
         id: uuid.v4(),
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: hashPassword(data.password),
         phone: data.phone,
         birthday: data.birthday,
@@ -61,9 +61,6 @@ const deleteUser = async (id) => {
     });
     return data;
 };
-
-//? Un servidor contiene la API
-//? Otro servidor contiene la Base de Datos
 
 const getUserByEmail = async (email) => {
     //? SELECT * FROM users where email = 'sahid.kick@academlo.com'//
