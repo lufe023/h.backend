@@ -64,9 +64,20 @@ const updateProductController = async (id, data) => {
 
     return result;
 };
+
+//controlador para borrar un producto de la base de datos
+const deleteProductController = async (id) => {
+    const result = await Products.destroy({
+        where: { id },
+    });
+
+    return result;
+};
+
 module.exports = {
     getAllProductsController,
     getProductByIdController,
     createNewProductController,
     updateProductController,
+    deleteProductController,
 };

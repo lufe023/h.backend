@@ -139,9 +139,30 @@ const patchProductService = (req, res) => {
         });
 };
 
+//servicio para borrar un producto de la base de datos
+const deleteProductService = (req, res) => {
+    const id = req.params.id;
+
+    if (id) {
+        productsControllers
+            .deleteProductController(id)
+            .then((data) => {
+                res.status(200).json({
+                    message: "Producto eliminado con exito",
+                });
+            })
+            .catch((err) => {
+                res.status(404).json({ message: err.message });
+            });
+    } else {
+        res.status(404).json({ message: "se nececita enviar un ID" });
+    }
+};
+
 module.exports = {
     getAllProductsService,
     getProductByIdService,
     createNewProductService,
     patchProductService,
+    deleteProductService,
 };

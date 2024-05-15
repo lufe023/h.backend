@@ -26,11 +26,17 @@ router.post(
 );
 
 //actualizar un producto existente
-
 router.patch(
     "/:id",
     passport.authenticate("jwt", { session: false }),
     productsServices.patchProductService
+);
+
+//ruta para borrar un producto de la DB
+router.delete(
+    "/:id",
+    passport.authenticate("jwt", { session: false }),
+    productsServices.deleteProductService
 );
 
 module.exports = router;
