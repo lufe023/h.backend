@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
 const productsServices = require("./products.services");
-
 //esta ruta para ver todos los usuarios la protegemos primero con un token y luego con el nivel del rol del usuario
 //? myserver/api/v1/products?offset=0&limit=50
 router

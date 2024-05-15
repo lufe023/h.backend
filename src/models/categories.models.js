@@ -21,6 +21,10 @@ const Category = db.define("Category", {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
 });
 
 module.exports = Category;
