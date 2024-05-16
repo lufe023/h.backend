@@ -85,8 +85,29 @@ const patchCategoryService = (req, res) => {
         });
 };
 
+//servicio para borrar un producto de la base de datos
+const deleteCategoryService = (req, res) => {
+    const id = req.params.id;
+
+    if (id) {
+        categoriesControllers
+            .deleteCategoryController(id)
+            .then((data) => {
+                res.status(204).json({
+                    message: "Categoría eliminado con exito",
+                });
+            })
+            .catch((err) => {
+                res.status(404).json({ message: err.message });
+            });
+    } else {
+        res.status(404).json({ message: "se nececita enviar un ID" });
+    }
+};
+
 module.exports = {
     getAllCategoriesService,
     createNewCategoryService,
     patchCategoryService,
+    deleteCategoryService,
 };

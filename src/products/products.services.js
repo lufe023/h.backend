@@ -146,7 +146,7 @@ const deleteProductService = (req, res) => {
         productsControllers
             .deleteProductController(id)
             .then((data) => {
-                res.status(200).json({
+                res.status(204).json({
                     message: "Producto eliminado con exito",
                 });
             })

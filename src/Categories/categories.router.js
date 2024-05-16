@@ -23,4 +23,12 @@ router.patch(
     passport.authenticate("jwt", { session: false }),
     categoriesServives.patchCategoryService
 );
+
+//Eliminar una Categoria
+router.delete(
+    "/:id",
+    passport.authenticate("jwt", { session: false }),
+    categoriesServives.deleteCategoryService
+);
+
 module.exports = router;

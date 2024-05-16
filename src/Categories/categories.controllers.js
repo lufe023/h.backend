@@ -1,3 +1,4 @@
+const Category = require("../models/categories.models");
 const Categories = require("../models/categories.models");
 const uuid = require("uuid");
 //llamar a todos los productos que existan
@@ -29,8 +30,18 @@ const updateCategoryController = async (id, data) => {
 
     return result;
 };
+
+//controlador para borrar una categoría
+const deleteCategoryController = async (id) => {
+    const result = await Category.destroy({
+        where: { id },
+    });
+
+    return result;
+};
 module.exports = {
     getAllCategoriesController,
     createNewCategoryController,
     updateCategoryController,
+    deleteCategoryController,
 };
