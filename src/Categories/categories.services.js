@@ -63,7 +63,30 @@ const createNewCategoryService = (req, res) => {
     }
 };
 
+//Servicio actualizacion parcial de una categoria
+const patchCategoryService = (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+
+    categoriesControllers
+        .updateCategoryController(id, data)
+        .then((data) => {
+            if (data[0]) {
+                res.status(200).json({
+                    message: `Categoría actualizado de forma satisfactoria`,
+                });
+            } else {
+                res.status(404).json({ message: "Este Id no es valido" });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ message: err.message });
+        });
+};
+
 module.exports = {
     getAllCategoriesService,
     createNewCategoryService,
+    patchCategoryService,
 };

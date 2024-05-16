@@ -125,7 +125,6 @@ const patchProductService = (req, res) => {
         .updateProductController(id, data)
         .then((data) => {
             if (data[0]) {
-                console.log("Producto actualizado:", data);
                 res.status(200).json({
                     message: `Producto actualizado de forma satisfactoria`,
                 });

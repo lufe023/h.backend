@@ -10,9 +10,17 @@ router.get(
     categoriesServives.getAllCategoriesService
 );
 
+//? Crear una nueva Categoria
 router.post(
     "/",
     passport.authenticate("jwt", { session: false }),
     categoriesServives.createNewCategoryService
+);
+
+//actualizar una Categoria
+router.patch(
+    "/:id",
+    passport.authenticate("jwt", { session: false }),
+    categoriesServives.patchCategoryService
 );
 module.exports = router;

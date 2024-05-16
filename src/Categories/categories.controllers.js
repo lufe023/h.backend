@@ -18,7 +18,19 @@ const createNewCategoryController = async (data) => {
     });
     return newUser;
 };
+
+//Controlador para actualizar un Categoria
+const updateCategoryController = async (id, data) => {
+    const result = await Categories.update(data, {
+        where: {
+            id,
+        },
+    });
+
+    return result;
+};
 module.exports = {
     getAllCategoriesController,
     createNewCategoryController,
+    updateCategoryController,
 };
