@@ -2,6 +2,7 @@
 const Category = require("../models/categories.models");
 const Products = require("../models/product.models");
 const uuid = require("uuid");
+const { Op } = require("sequelize");
 
 //llamar a todos los productos que existan
 const getAllProductsController = async (offset, limit) => {
@@ -74,10 +75,49 @@ const deleteProductController = async (id) => {
     return result;
 };
 
+// Controlador para obtener productos por categoría ID
+const getProductsByCategoryIdController = async (categoryId, offset, limit) => {
+    const data = await Products.findAndCountAll({
+        where: { category: categoryId },
+        offset,
+        limit,
+        include: [
+            {
+                model: Category,
+                as: "categoryDetails",
+            },
+        ],
+    });
+    return data;
+};
+
+// Controlador para buscar productos por título o descripción
+const searchProductsController = async (searchTerm, offset, limit) => {
+    const data = await Products.findAndCountAll({
+        where: {
+            [Op.or]: [
+                { Title: { [Op.iLike]: `%${searchTerm}%` } },
+                { Description: { [Op.iLike]: `%${searchTerm}%` } },
+            ],
+        },
+        offset,
+        limit,
+        include: [
+            {
+                model: Category,
+                as: "categoryDetails",
+            },
+        ],
+    });
+    return data;
+};
+
 module.exports = {
     getAllProductsController,
     getProductByIdController,
     createNewProductController,
     updateProductController,
     deleteProductController,
+    getProductsByCategoryIdController,
+    searchProductsController,
 };

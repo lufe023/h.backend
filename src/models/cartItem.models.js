@@ -1,10 +1,11 @@
-// models/cart.models.js
+// models/cartItem.models.js
 const { DataTypes } = require("sequelize");
 const db = require("../utils/database");
-const Users = require("./users.models");
+const Cart = require("./cart.models");
+const Product = require("./product.models");
 
-const Cart = db.define(
-    "Cart",
+const CartItem = db.define(
+    "CartItem",
     {
         id: {
             type: DataTypes.UUID,
@@ -12,26 +13,32 @@ const Cart = db.define(
             allowNull: false,
             defaultValue: DataTypes.UUIDV4,
         },
-        userId: {
+        cartId: {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
                 key: "id",
-                model: Users,
+                model: Cart,
             },
         },
-        status: {
-            type: DataTypes.STRING,
+        productId: {
+            type: DataTypes.UUID,
             allowNull: false,
-            defaultValue: "active", // Puede ser "active", "completed", "cancelled"
+            references: {
+                key: "id",
+                model: Product,
+            },
         },
-        totalPrice: {
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        price: {
             type: DataTypes.FLOAT,
             allowNull: false,
-            defaultValue: 0.0,
         },
     },
     {}
 );
 
-module.exports = Cart;
+module.exports = CartItem;

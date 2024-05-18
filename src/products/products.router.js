@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const productsServices = require("./products.services");
+
 //esta ruta para ver todos los usuarios la protegemos primero con un token y luego con el nivel del rol del usuario
 //? myserver/api/v1/products?offset=0&limit=50
 router
@@ -17,6 +18,18 @@ router
         passport.authenticate("jwt", { session: false }),
         productsServices.getProductByIdService
     );
+
+router.get(
+    "/category/:categoryId",
+    passport.authenticate("jwt", { session: false }),
+    productsServices.getProductsByCategoryIdService
+);
+
+router.get(
+    "/busqueda/:search",
+    passport.authenticate("jwt", { session: false }),
+    productsServices.searchProductsService
+);
 
 router.post(
     "/",

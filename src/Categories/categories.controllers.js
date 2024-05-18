@@ -36,9 +36,9 @@ const deleteCategoryController = async (id) => {
     const result = await Category.destroy({
         where: { id },
     });
-
     return result;
 };
+
 module.exports = {
     getAllCategoriesController,
     createNewCategoryController,

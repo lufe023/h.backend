@@ -8,7 +8,10 @@ const { port } = require("./config");
 const userRouter = require("./users/users.router");
 const authRouter = require("./auth/auth.router");
 const productsRouter = require("./products/products.router");
-const categoriesRouter = require("./Categories/categories.router");
+const categoriesRouter = require("./categories/categories.router");
+const cartRouter = require("./cart/cart.router");
+const orderRouter = require("./order/order.router");
+
 const initModels = require("./models/initModels");
 
 //? Initial Configs
@@ -46,6 +49,8 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/categories", categoriesRouter);
+app.use("/api/v1/cart", cartRouter);
+app.use("/api/v1/orders", orderRouter);
 
 app.listen(port, () => {
     console.log(`Server started at port ${port}`);

@@ -158,10 +158,99 @@ const deleteProductService = (req, res) => {
     }
 };
 
+// Servicio para obtener productos por categoría ID y devolver una respuesta HTTP
+const getProductsByCategoryIdService = (req, res) => {
+    const categoryId = req.params.categoryId;
+    const offset = Number(req.query.offset) || 0;
+    const urlBase = `http://${host}:${port}/api/v1/products`;
+    const limit =
+        Number(req.query.limit) > 100 || Number(req.query.limit) < 0
+            ? 100
+            : Number(req.query.limit) || 100;
+
+    if (categoryId) {
+        productsControllers
+            .getProductsByCategoryIdController(categoryId, offset, limit)
+            .then((data) => {
+                const nexPage =
+                    data.count - offset >= limit
+                        ? `${urlBase}?offset=${
+                              offset + limit
+                          }&limit=${limit}&categoryId=${categoryId}`
+                        : null;
+                const prevPage =
+                    offset - limit >= 0
+                        ? `${urlBase}?offset=${Math.max(
+                              0,
+                              offset - limit
+                          )}&limit=${limit}&categoryId=${categoryId}`
+                        : null;
+                res.status(200).json({
+                    next: nexPage,
+                    prev: prevPage,
+                    offset,
+                    limit,
+                    total: data.count,
+                    products: data.rows,
+                });
+            })
+            .catch((err) => {
+                res.status(400).json({ message: err.message });
+            });
+    } else {
+        res.status(400).json({ message: "categoryId is required" });
+    }
+};
+
+// Servicio para buscar productos por título o descripción y devolver una respuesta HTTP con el dato
+const searchProductsService = (req, res) => {
+    const searchTerm = req.params.search;
+    const offset = Number(req.query.offset) || 0;
+    const urlBase = `http://${host}:${port}/api/v1/products`;
+    const limit =
+        Number(req.query.limit) > 100 || Number(req.query.limit) < 0
+            ? 100
+            : Number(req.query.limit) || 100;
+
+    if (searchTerm) {
+        productsControllers
+            .searchProductsController(searchTerm, offset, limit)
+            .then((data) => {
+                const nexPage =
+                    data.count - offset >= limit
+                        ? `${urlBase}?offset=${
+                              offset + limit
+                          }&limit=${limit}&categoryId=${categoryId}`
+                        : null;
+                const prevPage =
+                    offset - limit >= 0
+                        ? `${urlBase}?offset=${Math.max(
+                              0,
+                              offset - limit
+                          )}&limit=${limit}&categoryId=${categoryId}`
+                        : null;
+                res.status(200).json({
+                    next: nexPage,
+                    prev: prevPage,
+                    offset,
+                    limit,
+                    total: data.count,
+                    products: data.rows,
+                });
+            })
+            .catch((err) => {
+                res.status(400).json({ message: err.message });
+            });
+    } else {
+        res.status(400).json({ message: "Envia un parametro valido" });
+    }
+};
 module.exports = {
     getAllProductsService,
     getProductByIdService,
     createNewProductService,
     patchProductService,
     deleteProductService,
+    getProductsByCategoryIdService,
+    searchProductsService,
 };
