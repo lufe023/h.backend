@@ -11,6 +11,7 @@ const productsRouter = require("./products/products.router");
 const categoriesRouter = require("./categories/categories.router");
 const cartRouter = require("./cart/cart.router");
 const orderRouter = require("./order/order.router");
+const listRouter = require("./list/list.router");
 
 const initModels = require("./models/initModels");
 
@@ -27,6 +28,8 @@ db.authenticate()
         console.log(err);
     });
 
+initModels();
+
 db.sync()
     .then(() => {
         console.log("Database Synced");
@@ -34,8 +37,6 @@ db.sync()
     .catch((err) => {
         console.log(err);
     });
-
-initModels();
 
 app.get("/", (req, res) => {
     res.status(200).json({
@@ -51,6 +52,7 @@ app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/categories", categoriesRouter);
 app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/list", listRouter);
 
 app.listen(port, () => {
     console.log(`Server started at port ${port}`);

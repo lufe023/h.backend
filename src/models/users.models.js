@@ -1,7 +1,8 @@
 const db = require("../utils/database");
-
 const { DataTypes } = require("sequelize");
 const Roles = require("./roles.models");
+const { createListController } = require("../list/list.controllers");
+const uuid = require("uuid");
 
 const Users = db.define(
     "users",
@@ -38,7 +39,6 @@ const Users = db.define(
             allowNull: true,
             unique: true,
         },
-
         role: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -47,11 +47,10 @@ const Users = db.define(
                 model: Roles,
             },
         },
-
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: "active", //active, suspended, looked
+            defaultValue: "active", //active, suspended, locked
         },
         isVerified: {
             type: DataTypes.BOOLEAN,
@@ -66,12 +65,24 @@ const Users = db.define(
     },
     {
         indexes: [
-            // Vamos agregar algunos indices para que nuestra DB vaya un poco mas rapida
+            // Agregar algunos índices para mejorar el rendimiento de la DB
             {
                 fields: ["id", "email", "role"],
             },
-            // ... (otros índices)
         ],
+        hooks: {
+            afterCreate: async (user, options) => {
+                try {
+                    await createListController(
+                        user.id,
+                        "Favorites",
+                        "Favorites"
+                    );
+                } catch (error) {
+                    console.error("Error creating favorites list:", error);
+                }
+            },
+        },
     }
 );
 

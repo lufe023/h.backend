@@ -7,6 +7,8 @@ const OrderDetail = require("./orderDetail.models");
 const Category = require("./categories.models");
 const Cart = require("./cart.models");
 const CartItem = require("./cartItem.models");
+const List = require("./list.models");
+const ListProduct = require("./ListProduct.model");
 
 const initModels = () => {
     Products.hasOne(Category, {
@@ -24,6 +26,17 @@ const initModels = () => {
         foreignKey: "cartId",
         sourceKey: "id",
         as: "CartItem",
+    });
+
+    Users.hasMany(List, { foreignKey: "userId" });
+    List.belongsTo(Users, { foreignKey: "userId" });
+    List.belongsToMany(Products, {
+        through: ListProduct,
+        foreignKey: "listId",
+    });
+    Products.belongsToMany(List, {
+        through: ListProduct,
+        foreignKey: "productId",
     });
 
     Order.belongsTo(Users, { foreignKey: "userId" });
