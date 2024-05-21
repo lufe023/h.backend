@@ -1,7 +1,7 @@
 const db = require("../utils/database");
 const { DataTypes } = require("sequelize");
 const Roles = require("./roles.models");
-const { createListController } = require("../list/list.controllers");
+const { createFavoriteList } = require("../utils/createFavoriteList ");
 const uuid = require("uuid");
 
 const Users = db.define(
@@ -42,10 +42,10 @@ const Users = db.define(
         role: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                key: "id",
-                model: Roles,
-            },
+            // references: {
+            //     key: "id",
+            //     model: Roles,
+            // },
         },
         status: {
             type: DataTypes.STRING,
@@ -72,15 +72,7 @@ const Users = db.define(
         ],
         hooks: {
             afterCreate: async (user, options) => {
-                try {
-                    await createListController(
-                        user.id,
-                        "Favorites",
-                        "Favorites"
-                    );
-                } catch (error) {
-                    console.error("Error creating favorites list:", error);
-                }
+                await createFavoriteList(user.id);
             },
         },
     }

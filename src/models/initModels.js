@@ -16,6 +16,17 @@ const initModels = () => {
         sourceKey: "category",
         as: "categoryDetails",
     });
+
+    Products.belongsTo(Users, {
+        foreignKey: "createdBy",
+        as: "userDetails",
+    });
+
+    Users.belongsTo(Roles, {
+        foreignKey: "role",
+        as: "roleDetails",
+    });
+
     CartItem.belongsTo(Products, {
         as: "productDetails",
         foreignKey: "productId",

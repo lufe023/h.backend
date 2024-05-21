@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const db = require("../utils/database");
-const Users = require("./users.models");
 
 const List = db.define(
     "list",
@@ -16,10 +15,6 @@ const List = db.define(
         },
         userId: {
             type: DataTypes.UUID,
-            references: {
-                key: "id",
-                model: Users,
-            },
         },
         type: {
             type: DataTypes.STRING,

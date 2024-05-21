@@ -11,7 +11,7 @@ router.post(
 
 // Agregar un producto a la lista
 router.post(
-    "/addProduct",
+    "/add-product",
     passport.authenticate("jwt", { session: false }),
     listServices.addProductToListService
 );
@@ -25,7 +25,7 @@ router.get(
 
 // Eliminar un producto de una lista
 router.delete(
-    "/removeProduct",
+    "/remove-product",
     passport.authenticate("jwt", { session: false }),
     listServices.removeProductFromListService
 );

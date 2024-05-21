@@ -16,10 +16,10 @@ const CartItem = db.define(
         cartId: {
             type: DataTypes.UUID,
             allowNull: false,
-            references: {
-                key: "id",
-                model: Cart,
-            },
+            // references: {
+            //     key: "id",
+            //     model: Cart,
+            // },
         },
         productId: {
             type: DataTypes.UUID,

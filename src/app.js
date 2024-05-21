@@ -12,6 +12,7 @@ const categoriesRouter = require("./categories/categories.router");
 const cartRouter = require("./cart/cart.router");
 const orderRouter = require("./order/order.router");
 const listRouter = require("./list/list.router");
+const favoriteListRouter = require("./favoriteList/favoriteList.router");
 
 const initModels = require("./models/initModels");
 
@@ -53,6 +54,7 @@ app.use("/api/v1/categories", categoriesRouter);
 app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/list", listRouter);
+app.use("/api/v1/favoritelist", favoriteListRouter);
 
 app.listen(port, () => {
     console.log(`Server started at port ${port}`);

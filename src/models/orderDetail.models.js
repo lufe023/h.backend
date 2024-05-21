@@ -21,10 +21,10 @@ const OrderDetail = db.define("OrderDetail", {
     productId: {
         type: DataTypes.UUID,
         allowNull: false,
-        references: {
-            key: "id",
-            model: Product,
-        },
+        // references: {
+        //     key: "id",
+        //     model: Product,
+        // },
     },
     quantity: {
         type: DataTypes.INTEGER,

@@ -6,17 +6,17 @@ const List = require("./list.models");
 const ListProduct = db.define("ListProduct", {
     listId: {
         type: DataTypes.UUID,
-        references: {
-            model: List,
-            key: "id",
-        },
+        // references: {
+        //     model: List,
+        //     key: "id",
+        // },
     },
     productId: {
         type: DataTypes.UUID,
-        references: {
-            model: Products,
-            key: "id",
-        },
+        // references: {
+        //     model: Products,
+        //     key: "id",
+        // },
     },
 });
 

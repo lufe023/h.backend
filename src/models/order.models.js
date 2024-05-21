@@ -12,10 +12,10 @@ const Order = db.define("Order", {
     userId: {
         type: DataTypes.UUID,
         allowNull: false,
-        references: {
-            model: Users,
-            key: "id",
-        },
+        // references: {
+        //     model: Users,
+        //     key: "id",
+        // },
     },
     status: {
         type: DataTypes.STRING,

@@ -3,9 +3,9 @@ const ListProduct = require("../models/ListProduct.model");
 const List = require("../models/list.models");
 const Product = require("../models/product.models");
 
-const createListController = async (userId, nombreDeLista, type) => {
+const createListController = async (userId, listName, type) => {
     //controllador para crear una lista
-    return await List.create({ userId, nombreDeLista, type });
+    return await List.create({ userId, listName, type });
 };
 
 //controlador para agregar un producto a la lista

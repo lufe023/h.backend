@@ -3,6 +3,7 @@ const { host, port } = require("../config");
 
 // Servicio para crear una nueva lista
 const createListService = (req, res) => {
+    console.log("El error");
     const { userId, nombreDeLista, type } = req.body;
 
     listControllers
@@ -52,17 +53,20 @@ const getProductsInListService = (req, res) => {
 
 // Servicio para eliminar un producto de una lista
 const removeProductFromListService = (req, res) => {
-    const { listId, productId } = req.body;
+    const listId = req.query.listId;
+    const productId = req.query.productId;
 
-    listControllers
-        .removeProductFromListController(listId, productId)
-        .then((data) => {
-            res.status(204).json(data);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+    if (listId && productId) {
+        listControllers
+            .removeProductFromListController(listId, productId)
+            .then((data) => {
+                res.status(204).json(data);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    }
 };
 
 // Servicio para eliminar una lista
