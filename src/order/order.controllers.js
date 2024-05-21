@@ -4,7 +4,7 @@ const OrderDetail = require("../models/orderDetail.models");
 const CartItem = require("../models/cartItem.models");
 const Cart = require("../models/cart.models");
 const uuid = require("uuid");
-const { clearCartController } = require("../Cart/cart.controllers");
+const { clearCartController } = require("../cart/cart.controllers");
 
 const createOrderController = async (
     userId,
