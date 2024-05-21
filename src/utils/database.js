@@ -4,6 +4,7 @@ const config = require("../config");
 const db = new Sequelize({
     dialect: "postgres",
     host: config.db.host, //? Variable de entorno del host
+    port: config.db.port, // Variable de entorno del puerto
     username: config.db.username, //? Variable de entorno del usuario
     password: config.db.password, //? Variable de entorno de la contraseña
     database: config.db.dbName, //? Variable de entorno de la base de datos
