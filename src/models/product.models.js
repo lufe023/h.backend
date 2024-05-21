@@ -53,10 +53,10 @@ const Product = db.define(
         category: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            // references: {
-            //     key: "id",
-            //     model: Category,
-            // },
+            references: {
+                key: "id",
+                model: Category,
+            },
         },
         createdBy: {
             type: DataTypes.UUID,
