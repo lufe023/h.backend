@@ -4,14 +4,14 @@
 //* Recovery Password
 //* Verify User
 
-const router = require('express').Router()
-const authServices = require('./auth.services')
-const {registerUser} = require('../users/users.services')
+const router = require("express").Router();
+const authServices = require("./auth.services");
+const { registerUser } = require("../users/users.services");
 
 //? /api/v1/auth
 
-router.post('/register', registerUser)
+router.post("/register", registerUser);
 
-router.post('/login', authServices.login)
+router.post("/login", authServices.login);
 
-module.exports = router
+module.exports = router;

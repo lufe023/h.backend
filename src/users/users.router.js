@@ -27,7 +27,10 @@ router
 //? /api/v1/users/:id
 router
     .route("/:id")
-    .get(userServices.getUserById)
+    .get(
+        passport.authenticate("jwt", { session: false }),
+        userServices.getUserById
+    )
     .patch(
         passport.authenticate("jwt", { session: false }),
         adminValidate,

@@ -19,6 +19,7 @@ const getUserById = async (id) => {
             id: id,
             status: "active",
         },
+        attributes: { exclude: ["password"] },
     });
     return data;
 };
