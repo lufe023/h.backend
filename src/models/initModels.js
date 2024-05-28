@@ -22,6 +22,9 @@ const initModels = () => {
         as: "userDetails",
     });
 
+    Users.belongsTo(Roles);
+    //Users.hasOne(Roles, {foreignKey: 'id',sourceKey: 'role', as: 'nivel'})
+
     Users.belongsTo(Roles, {
         foreignKey: "role",
         as: "roleDetails",

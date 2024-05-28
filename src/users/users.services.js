@@ -1,14 +1,45 @@
 const usersControllers = require("./users.controllers");
 const { enviarMail } = require("../utils/mails/sendEmail");
+const { host, port } = require("../config");
 
 const getAllUsers = (req, res) => {
+    //donde inicia
+    const offset = Number(req.query.offset) || 0;
+
+    //capacidad maxima
+    const limit =
+        Number(req.query.limit) > 100 || Number(req.query.limit) < 0
+            ? 100
+            : Number(req.query.limit) || 100;
+
+    const urlBase = `http://${host}:${port}/api/v1/users`; //vamos a pasarle la url al frontend para facilitar el paginado
+
     usersControllers
-        .getAllUsers()
+        .getAllUsers(offset, limit)
         .then((data) => {
-            res.status(200).json(data);
+            const nexPage =
+                data.count - offset >= limit
+                    ? `${urlBase}?offset=${offset + limit}&limit=${limit}`
+                    : null;
+
+            const prevPage =
+                offset - limit >= 0
+                    ? `${urlBase}?offset=${Math.max(
+                          0,
+                          offset - limit
+                      )}&limit=${limit}`
+                    : null;
+            res.status(200).json({
+                next: nexPage,
+                prev: prevPage,
+                offset,
+                limit,
+                count: data.count,
+                results: data.rows,
+            });
         })
         .catch((err) => {
-            res.status(400).json({ message: err.message });
+            res.status(400).json({ message: err });
         });
 };
 
@@ -77,10 +108,10 @@ const registerUser = (req, res) => {
 
 const patchUser = (req, res) => {
     const id = req.params.id;
-    const { firstName, lastName, phone, gender, country } = req.body;
+    const { firstName, lastName, phone, status } = req.body;
 
     usersControllers
-        .updateUser(id, { firstName, lastName, phone, gender, country })
+        .updateUser(id, { firstName, lastName, phone, status })
         .then((data) => {
             if (data[0]) {
                 res.status(200).json({
@@ -112,7 +143,6 @@ const deleteUser = (req, res) => {
 };
 
 //? My user services
-
 const getMyUser = (req, res) => {
     const id = req.user.id; //? req.user contiene la informacion del token desencriptado
 

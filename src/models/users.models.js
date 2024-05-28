@@ -39,6 +39,10 @@ const Users = db.define(
             allowNull: true,
             unique: true,
         },
+        birthday: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
         role: {
             type: DataTypes.INTEGER,
             allowNull: false,

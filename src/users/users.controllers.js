@@ -3,11 +3,15 @@ const uuid = require("uuid");
 
 const Users = require("../models/users.models");
 const { hashPassword } = require("../utils/crypto");
+const Roles = require("../models/roles.models");
 
-const getAllUsers = async () => {
-    const data = await Users.findAll({
-        where: {
-            status: "active",
+//conseguir todos los usuarios que existan en el sistema
+const getAllUsers = async (offset, limit) => {
+    const data = await Users.findAndCountAll({
+        offset: offset,
+        limit: limit,
+        attributes: {
+            exclude: ["password"],
         },
     });
     return data;
@@ -20,6 +24,11 @@ const getUserById = async (id) => {
             status: "active",
         },
         attributes: { exclude: ["password"] },
+        include: [
+            {
+                model: Roles,
+            },
+        ],
     });
     return data;
 };
@@ -32,9 +41,6 @@ const createUser = async (data) => {
         email: data.email.toLowerCase(),
         password: hashPassword(data.password),
         phone: data.phone,
-        birthday: data.birthday,
-        gender: data.gender,
-        country: data.country,
         role: data.role || 1,
     });
 
