@@ -18,7 +18,6 @@ const getUsersTodayController = async () => {
         attributes: { exclude: ["password"] },
         order: [["createdAt", "DESC"]],
     });
-
     return usersToday;
 };
 

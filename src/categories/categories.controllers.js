@@ -1,6 +1,15 @@
 const Category = require("../models/categories.models");
 const Categories = require("../models/categories.models");
 const uuid = require("uuid");
+
+//encontrar una categoría por ID
+const getCategoryByIdController = async (id) => {
+    const data = await Categories.findOne({
+        where: { id },
+    });
+    return data;
+};
+
 //llamar a todos los productos que existan
 const getAllCategoriesController = async (offset, limit) => {
     const data = await Categories.findAndCountAll({
@@ -40,6 +49,7 @@ const deleteCategoryController = async (id) => {
 };
 
 module.exports = {
+    getCategoryByIdController,
     getAllCategoriesController,
     createNewCategoryController,
     updateCategoryController,

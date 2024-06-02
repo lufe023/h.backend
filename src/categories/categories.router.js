@@ -10,6 +10,13 @@ router.get(
     categoriesServives.getAllCategoriesService
 );
 
+//Encontrar una Categoria por ID
+router.get(
+    "/:id",
+    passport.authenticate("jwt", { session: false }),
+    categoriesServives.getCategoryByIdService
+);
+
 //? Crear una nueva Categoria
 router.post(
     "/",

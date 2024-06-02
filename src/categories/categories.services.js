@@ -1,5 +1,24 @@
 const categoriesControllers = require("./categories.controllers");
 const { host, port } = require("../config");
+
+//servicio para encontrar una categoría por ID
+const getCategoryByIdService = (req, res) => {
+    const id = req.params.id;
+
+    if (id) {
+        categoriesControllers
+            .getCategoryByIdController(id)
+            .then((data) => {
+                res.status(200).json(data);
+            })
+            .catch((err) => {
+                res.status(404).json({ err });
+            });
+    } else {
+        res.status(404).json({ message: "se nececita enviar un ID" });
+    }
+};
+
 //servicio para llamar a todos los productos y devolver una respuesta http con su respectivo codigo
 const getAllCategoriesService = (req, res) => {
     //donde inicia
@@ -106,6 +125,7 @@ const deleteCategoryService = (req, res) => {
 };
 
 module.exports = {
+    getCategoryByIdService,
     getAllCategoriesService,
     createNewCategoryService,
     patchCategoryService,
