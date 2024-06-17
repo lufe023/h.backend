@@ -11,7 +11,7 @@ const createCartController = async (userId) => {
 const addProductToCartController = async (cartId, productId, quantity) => {
     const product = await Product.findByPk(productId);
     if (!product) {
-        throw new Error("PRoductgo no encontrado");
+        throw new Error("Producto no encontrado");
     }
     const existingCartItem = await CartItem.findOne({
         where: {
@@ -59,6 +59,23 @@ const getCartItemsController = async (cartId) => {
     });
 };
 
+const getCartByUser = async (userId) => {
+    const cart = await Cart.findOne({
+        where: {
+            userId,
+        },
+        include: [
+            {
+                model: CartItem,
+                as: "CartItem",
+                include: [{ model: Product, as: "productDetails" }],
+            },
+        ],
+    });
+
+    return cart;
+};
+
 const removeProductFromCartController = async (cartItemId) => {
     return await CartItem.destroy({
         where: { id: cartItemId },
@@ -75,6 +92,7 @@ module.exports = {
     addProductToCartController,
     updateCartItemQuantityController,
     getCartItemsController,
+    getCartByUser,
     removeProductFromCartController,
     clearCartController,
 };

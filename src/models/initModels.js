@@ -36,6 +36,7 @@ const initModels = () => {
     });
     CartItem.belongsTo(Cart, { foreignKey: "cartId" });
     Cart.belongsTo(Users, { foreignKey: "userId" });
+    Users.hasOne(Cart);
     Cart.hasMany(CartItem, {
         foreignKey: "cartId",
         sourceKey: "id",

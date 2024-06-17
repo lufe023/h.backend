@@ -15,6 +15,12 @@ router.post(
     passport.authenticate("jwt", { session: false }),
     cartServices.addProductToCartService
 );
+// Ruta para obtener los productos del carrito
+router.get(
+    "/",
+    passport.authenticate("jwt", { session: false }),
+    cartServices.getCartByUserService
+);
 
 // Ruta para obtener los productos del carrito
 router.get(

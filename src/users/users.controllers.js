@@ -4,6 +4,7 @@ const uuid = require("uuid");
 const Users = require("../models/users.models");
 const { hashPassword } = require("../utils/crypto");
 const Roles = require("../models/roles.models");
+const Cart = require("../models/cart.models");
 
 //conseguir todos los usuarios que existan en el sistema
 const getAllUsers = async (offset, limit) => {
@@ -27,6 +28,9 @@ const getUserById = async (id) => {
         include: [
             {
                 model: Roles,
+            },
+            {
+                model: Cart,
             },
         ],
     });

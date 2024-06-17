@@ -52,6 +52,16 @@ const getCartItemsService = async (req, res) => {
     }
 };
 
+const getCartByUserService = async (req, res) => {
+    const userId = req.user.id;
+    try {
+        const items = await cartControllers.getCartByUser(userId);
+        res.status(200).json(items);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
 const removeProductFromCartService = async (req, res) => {
     const cartItemId = req.params.cartItemId;
     try {
@@ -77,6 +87,7 @@ module.exports = {
     addProductToCartService,
     updateCartItemQuantityService,
     getCartItemsService,
+    getCartByUserService,
     removeProductFromCartService,
     clearCartService,
 };

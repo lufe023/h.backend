@@ -15,10 +15,6 @@ const Cart = db.define(
         userId: {
             type: DataTypes.UUID,
             allowNull: false,
-            // references: {
-            //     key: "id",
-            //     model: Users,
-            // },
         },
         status: {
             type: DataTypes.STRING,
