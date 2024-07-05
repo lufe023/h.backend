@@ -1,6 +1,7 @@
 // controllers/cart.controllers.js
 const Cart = require("../models/cart.models");
 const CartItem = require("../models/cartItem.models");
+const Category = require("../models/categories.models");
 const Product = require("../models/product.models");
 const uuid = require("uuid");
 
@@ -49,13 +50,19 @@ const updateCartItemQuantityController = async (cartItemId, newQuantity) => {
     cartItem.quantity = newQuantity;
     await cartItem.save({ individualHooks: true });
 
-    return cartItem;
+    const cart = await getCartItemsController(cartItem.cartId);
+    return cart;
 };
 
 const getCartItemsController = async (cartId) => {
     return await CartItem.findAll({
         where: { cartId },
-        include: [{ model: Product, as: "productDetails" }],
+        include: [
+            {
+                model: Product,
+                as: "productDetails",
+            },
+        ],
     });
 };
 
@@ -68,7 +75,18 @@ const getCartByUser = async (userId) => {
             {
                 model: CartItem,
                 as: "CartItem",
-                include: [{ model: Product, as: "productDetails" }],
+                include: [
+                    {
+                        model: Product,
+                        as: "productDetails",
+                        include: [
+                            {
+                                model: Category,
+                                as: "categoryDetails",
+                            },
+                        ],
+                    },
+                ],
             },
         ],
     });

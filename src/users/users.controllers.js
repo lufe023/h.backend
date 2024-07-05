@@ -29,9 +29,6 @@ const getUserById = async (id) => {
             {
                 model: Roles,
             },
-            {
-                model: Cart,
-            },
         ],
     });
     return data;

@@ -33,7 +33,7 @@ const login = (req, res) => {
                         expiresAt: expirationDate, // Enviar fecha de expiración en la respuesta
                     });
                 } else {
-                    res.status(401).json({ message: "Invalid Credentials" });
+                    res.status(401).json({ message: "Debe Llenar los campos" });
                 }
             })
             .catch((error) => {
